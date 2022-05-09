@@ -16,8 +16,9 @@ public class Sketch extends PApplet {
   boolean leftPressed = false;
   boolean rightPressed = false;
 
-  int Lives = 3;
+  int lives = 3;
 
+  boolean playerStatus = true;
 
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -44,37 +45,52 @@ public class Sketch extends PApplet {
    */
   public void draw() {
 
-    background(0);
+    if (playerStatus) {
+      background(0);
+      fill(255);
 
-    fill(255);
-    for (int i = 0; i < circleY.length; i++) {
-      if (ballHideStatus[i] == false) {
-        float circleX = width * i / circleY.length;
-        ellipse(circleX, circleY[i], 50, 50);
-        circleY[i] += snowballSpeed;
+      for (int i = 0; i < circleY.length; i++) {
+        if (ballHideStatus[i] == false) {
+          float circleX = width * i / circleY.length;
+          ellipse(circleX, circleY[i], 50, 50);
+          circleY[i] += snowballSpeed;
+        }
+    
+        if (circleY[i] > height) {
+          circleY[i] = 0;
+        }
+      }
+
+      fill(168, 209, 223);
+      ellipse(playerX, playerY, 25, 25);
+      if (leftPressed) {
+        playerX += -5;
+      }
+      if (rightPressed) {
+        playerX += 5;
+      }
+      if (upPressed) {
+        playerY += -5;
+      }
+      if (downPressed) {
+        playerY += 5;
       }
   
-      if (circleY[i] > height) {
-        circleY[i] = 0;
+      fill(246, 7, 17);
+      for (int i = 1; i <= lives; i++) {
+        rect(70 * i, 50, 50, 50);
+      }
+
+      if (lives == 0) {
+        playerStatus = false;
       }
     }
-    fill(168, 209, 223);
-    ellipse(playerX, playerY, 25, 25);
-    if (leftPressed) {
-      playerX += -5;
-    }
-    if (rightPressed) {
-      playerX += 5;
-    }
-    if (upPressed) {
-      playerY += -5;
-    }
-    if (downPressed) {
-      playerY += 5;
-    }
 
-
+    else {
+      background(255);
+    }
   }
+
   
   // define other methods down here.
 
