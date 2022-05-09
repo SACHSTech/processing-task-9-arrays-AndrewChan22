@@ -10,11 +10,13 @@ public class Sketch extends PApplet {
 
   float playerX = 400;
   float playerY = 400;
-  
+
   boolean upPressed = false;
   boolean downPressed = false;
   boolean leftPressed = false;
   boolean rightPressed = false;
+
+  int Lives = 3;
 
 
   /**
@@ -44,6 +46,7 @@ public class Sketch extends PApplet {
 
     background(0);
 
+    fill(255);
     for (int i = 0; i < circleY.length; i++) {
       if (ballHideStatus[i] == false) {
         float circleX = width * i / circleY.length;
@@ -55,22 +58,37 @@ public class Sketch extends PApplet {
         circleY[i] = 0;
       }
     }
+    fill(168, 209, 223);
+    ellipse(playerX, playerY, 25, 25);
+    if (leftPressed) {
+      playerX += -5;
+    }
+    if (rightPressed) {
+      playerX += 5;
+    }
+    if (upPressed) {
+      playerY += -5;
+    }
+    if (downPressed) {
+      playerY += 5;
+    }
+
 
   }
   
   // define other methods down here.
 
   public void keyPressed() {
-    if (keyCode == LEFT || key == 'a')  {
+    if (key == 'a')  {
       leftPressed = true;
     }
-    else if (keyCode == RIGHT || key == 'd') {
+    else if (key == 'd') {
       rightPressed = true;
     }
-    else if (keyCode == UP || key == 'w') {
+    else if (key == 'w') {
       upPressed = true;
     }
-    else if (keyCode == DOWN || key == 's') {
+    else if (key == 's') {
       downPressed = true;
     }
 
@@ -83,16 +101,16 @@ public class Sketch extends PApplet {
   }
 
   public void keyReleased() {
-    if (keyCode == LEFT || key == 'a')  {
+    if (key == 'a')  {
       leftPressed = false;
     }
-    else if (keyCode == RIGHT || key == 'd') {
+    else if (key == 'd') {
       rightPressed = false;
     }
-    else if (keyCode == UP || key == 'w') {
+    else if (key == 'w') {
       upPressed = false;
     }
-    else if (keyCode == DOWN || key == 's') {
+    else if (key == 's') {
       downPressed = false;
     }
 
