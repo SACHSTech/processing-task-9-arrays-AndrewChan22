@@ -6,19 +6,20 @@ public class Sketch extends PApplet {
   float[] circleX = new float[30];
   boolean[] ballHideStatus = new boolean[30];
 
-  int snowballSpeed = 2;
+  int intSnowballSpeed = 2;
 
-  float playerX = 400;
-  float playerY = 400;
+  float fltPlayerX = 400;
+  float fltPlayerY = 400;
 
-  boolean upPressed = false;
-  boolean downPressed = false;
-  boolean leftPressed = false;
-  boolean rightPressed = false;
+  boolean boolUpPressed = false;
+  boolean boolDownPressed = false;
+  boolean boolLeftPressed = false;
+  boolean boolRightPressed = false;
 
-  int lives = 3;
+  boolean boolPlayerStatus = true;
+  int intLives = 3;
 
-  boolean playerStatus = true;
+  boolean boolMouseClicked = false;
 
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -45,47 +46,70 @@ public class Sketch extends PApplet {
    */
   public void draw() {
 
-    if (playerStatus) {
+    // check to see if player is still alive
+    if (boolPlayerStatus == true) {
       background(0);
+    
       fill(255);
 
+      // draw snowballs to the screen if ballHideStatus is false
       for (int i = 0; i < circleY.length; i++) {
         if (ballHideStatus[i] == false) {
-          float circleX = width * i / circleY.length;
-          ellipse(circleX, circleY[i], 50, 50);
-          circleY[i] += snowballSpeed;
+          ellipse(circleX[i], circleY[i], 50, 50);
+
+          circleY[i] += intSnowballSpeed;
         }
     
-        if (circleY[i] > height) {
+        // resets snowball once it reaches end of screen
+        if (circleY[i] > height - 25) {
           circleY[i] = 0;
         }
+
+        // if player circle collides with snowball, stop drawing snowball to screen and remove 1 life
+        if (dist(fltPlayerX, fltPlayerY, circleX[i], circleY[i]) <= 37.5 && ballHideStatus[i] == false) {
+          ballHideStatus[i] = true;
+          intLives--;
+        }
+        
+        // if snowball is clicked, stop drawing snowball to screen
+        if (dist(mouseX, mouseY, circleX[i], circleY[i]) <= 25 && boolMouseClicked) {
+            ballHideStatus[i] = true;
+        }
+        
       }
 
       fill(168, 209, 223);
-      ellipse(playerX, playerY, 25, 25);
-      if (leftPressed) {
-        playerX += -5;
+
+      // draw player circle
+      ellipse(fltPlayerX, fltPlayerY, 25, 25);
+      
+      // keyboard controls for player using w, a, s, d
+      if (boolLeftPressed) {
+        fltPlayerX += -5;
       }
-      if (rightPressed) {
-        playerX += 5;
+      if (boolRightPressed) {
+        fltPlayerX += 5;
       }
-      if (upPressed) {
-        playerY += -5;
+      if (boolUpPressed) {
+        fltPlayerY += -5;
       }
-      if (downPressed) {
-        playerY += 5;
+      if (boolDownPressed) {
+        fltPlayerY += 5;
       }
   
       fill(246, 7, 17);
-      for (int i = 1; i <= lives; i++) {
+
+      // draw three squares to indicate player intLives
+      for (int i = 1; i <= intLives; i++) {
         rect(70 * i, 50, 50, 50);
       }
 
-      if (lives == 0) {
-        playerStatus = false;
+      if (intLives == 0) {
+        boolPlayerStatus = false;
       }
     }
 
+    // screen clears to white when all lives are lost
     else {
       background(255);
     }
@@ -96,47 +120,55 @@ public class Sketch extends PApplet {
 
   public void keyPressed() {
     if (key == 'a')  {
-      leftPressed = true;
+      boolLeftPressed = true;
     }
     else if (key == 'd') {
-      rightPressed = true;
+      boolRightPressed = true;
     }
     else if (key == 'w') {
-      upPressed = true;
+      boolUpPressed = true;
     }
     else if (key == 's') {
-      downPressed = true;
+      boolDownPressed = true;
     }
 
     if (keyCode == UP) {
-      snowballSpeed = 1;
+      intSnowballSpeed = 1;
     }
     if (keyCode == DOWN) {
-      snowballSpeed = 5;
+      intSnowballSpeed = 5;
     }
   }
 
   public void keyReleased() {
     if (key == 'a')  {
-      leftPressed = false;
+      boolLeftPressed = false;
     }
     else if (key == 'd') {
-      rightPressed = false;
+      boolRightPressed = false;
     }
     else if (key == 'w') {
-      upPressed = false;
+      boolUpPressed = false;
     }
     else if (key == 's') {
-      downPressed = false;
+      boolDownPressed = false;
     }
 
     if (keyCode == UP) {
-      snowballSpeed = 2;
+      intSnowballSpeed = 2;
     }
     
     if (keyCode == DOWN) {
-      snowballSpeed = 2;
+      intSnowballSpeed = 2;
     }
+  }
+
+  public void mousePressed() {
+    boolMouseClicked = true;
+  }
+
+  public void mouseReleased() {
+    boolMouseClicked = false;
   }
 
 }
