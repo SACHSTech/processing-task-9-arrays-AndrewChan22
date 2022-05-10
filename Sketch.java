@@ -2,8 +2,8 @@ import processing.core.PApplet;
 
 public class Sketch extends PApplet {
   
-	float[] circleY = new float[30];
   float[] circleX = new float[30];
+  float[] circleY = new float[30];
   boolean[] ballHideStatus = new boolean[30];
 
   int intSnowballSpeed = 2;
