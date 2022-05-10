@@ -1,7 +1,7 @@
 import processing.core.PApplet;
 
 public class Sketch extends PApplet {
-	
+  
 	float[] circleY = new float[30];
   float[] circleX = new float[30];
   boolean[] ballHideStatus = new boolean[30];
@@ -118,6 +118,9 @@ public class Sketch extends PApplet {
   
   // define other methods down here.
 
+  /**
+   * if movement keys are pressed (wasd), change corresponding boolean value to true to allow player to move. If up arrow is pressed, decrease speed of snowballs, if down arrow is pressed, increase speed of snowballs
+   */
   public void keyPressed() {
     if (key == 'a')  {
       boolLeftPressed = true;
@@ -140,6 +143,9 @@ public class Sketch extends PApplet {
     }
   }
 
+  /**
+   * Once movement key is released, change boolean value back to false so that player only moves when the corresponding movement keys are pressed. Once up arrow or down arrow key is released, set speed of snowball back to default
+   */
   public void keyReleased() {
     if (key == 'a')  {
       boolLeftPressed = false;
@@ -163,10 +169,16 @@ public class Sketch extends PApplet {
     }
   }
 
+  /**
+   * when mouse is clicked, set corresponding boolean value to true to allow player to remove snowballs on the screen by pressing on them
+   */
   public void mousePressed() {
     boolMouseClicked = true;
   }
 
+  /**
+   * once mouse is released, set corresponding boolean value back to false (default)
+   */
   public void mouseReleased() {
     boolMouseClicked = false;
   }
